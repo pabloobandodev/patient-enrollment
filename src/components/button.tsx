@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.background};
@@ -24,11 +24,11 @@ const StyledButton = styled.button`
   align-items: center;
   &:hover {
     transition: all 150ms linear;
-    opacity: .90;
+    opacity: 0.9;
   }
   &:active {
     transition: all 150ms linear;
-    opacity: .75;
+    opacity: 0.75;
   }
   &:focus {
     outline: none;

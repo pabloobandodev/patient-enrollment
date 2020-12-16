@@ -1,7 +1,7 @@
 import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import ReactDOM from 'react-dom'
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Overlay = styled.div`
   position: fixed;
@@ -46,14 +46,18 @@ const Modal: React.FC<{ isOpen: boolean }> = ({ children, isOpen }) => {
   }
   return ReactDOM.createPortal(
     <AnimatePresence>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 1 }}
+      >
         <Overlay />
-        <Wrapper aria-modal aria-hidden tabIndex={-1} role="dialog">
+        <Wrapper aria-modal aria-hidden tabIndex={-1} role='dialog'>
           <ModalStyled>{children}</ModalStyled>
         </Wrapper>
       </motion.div>
     </AnimatePresence>,
-    document.body,
+    document.body
   )
 }
 
