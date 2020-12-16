@@ -1,13 +1,13 @@
 import * as React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "./components/global-styles";
-import Button from "./components/button";
-import ToggleTheme from "./components/toggle-theme";
+import { GlobalStyles } from "./components/GlobalStyles";
+import Button from "./components/Button";
+import ToggleTheme from "./components/ToggleTheme";
 import { lightTheme, darkTheme } from "./lib/theme";
 import { useDarkMode } from "./hooks/useDarkmode";
 import useBoolean from './hooks/useBoolean'
-import Modal from './components/modal'
-import FormSteps from './components/form-steps'
+import Modal from './components/Modal'
+import FormSteps from './components/FormSteps'
 
 const ContainerCenter = styled.div`
   display: flex;

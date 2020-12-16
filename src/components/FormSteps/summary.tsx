@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
-import Button from '../button'
+import Button from '../Button'
 
 const ContainerText = styled.div`
   display: flex;
@@ -29,13 +29,13 @@ const StyledButton = styled(Button)`
   border-color: ${(props) => props.color};
 `
 
-const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
+const Summary: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
   if (!isVisible) {
     return null
   }
   return (
     <>
-      <ContainerText>Questionnaire</ContainerText>
+      <ContainerText>Summary</ContainerText>
       <ContainerButton>
         <ButtonsContainer>
           <StyledButton onClick={onPrev}>Back</StyledButton>
@@ -48,4 +48,4 @@ const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
   )
 }
 
-export default Questionnaire
+export default Summary
