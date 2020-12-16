@@ -5,6 +5,9 @@ import Button from "./components/button";
 import ToggleTheme from "./components/toggle-theme";
 import { lightTheme, darkTheme } from "./lib/theme";
 import { useDarkMode } from "./hooks/useDarkmode";
+import useBoolean from './hooks/useBoolean'
+import Modal from './components/modal'
+import FormSteps from './components/form-steps'
 
 const ContainerCenter = styled.div`
   display: flex;
@@ -21,6 +24,7 @@ const ButtonEnrollment = styled(Button)`
 const App = () => {
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
+  const [isEnrollment, toggleIsEnrollment] = useBoolean()
 
   if (!mountedComponent) return <div />;
 
@@ -29,10 +33,13 @@ const App = () => {
       <GlobalStyles />
       <ToggleTheme theme={theme} toggleTheme={themeToggler} />
       <ContainerCenter>
-        <ButtonEnrollment>
+        <ButtonEnrollment onClick={toggleIsEnrollment}>
           <strong>enrollment</strong>
         </ButtonEnrollment>
       </ContainerCenter>
+      <Modal isOpen={isEnrollment}>
+        <FormSteps onClose={toggleIsEnrollment} />
+      </Modal>
     </ThemeProvider>
   );
 };
