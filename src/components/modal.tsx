@@ -29,12 +29,12 @@ const Wrapper = styled.div`
 const ModalStyled = styled.div`
   z-index: 100;
   background-color: #fff;
-  height: 50%;
+  height: 55%;
   position: relative;
   margin: 1.75rem auto;
   border-radius: 0.6rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 50rem;
   margin: 1rem;
   display: flex;
   flex-direction: column;
