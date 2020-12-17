@@ -4,8 +4,9 @@ import { GlobalStyles } from './components/GlobalStyles'
 import Button from './components/Button'
 import ToggleTheme from './components/ToggleTheme'
 import { lightTheme, darkTheme } from './lib/theme'
-import { useDarkMode } from './hooks/useDarkmode'
+import useDarkMode from './hooks/useDarkmode'
 import useBoolean from './hooks/useBoolean'
+import { FormProvider } from './context/form-context'
 import Modal from './components/Modal'
 import FormSteps from './components/FormSteps'
 
@@ -28,14 +29,16 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <GlobalStyles />
-      <ToggleTheme theme={theme} toggleTheme={themeToggler} />
-      <ButtonEnrollment onClick={toggleIsEnrollment}>
-        <strong>enrollment</strong>
-      </ButtonEnrollment>
-      <Modal isOpen={isEnrollment}>
-        <FormSteps onClose={toggleIsEnrollment} />
-      </Modal>
+      <FormProvider>
+        <GlobalStyles />
+        <ToggleTheme theme={theme} toggleTheme={themeToggler} />
+        <ButtonEnrollment onClick={toggleIsEnrollment}>
+          <strong>enrollment</strong>
+        </ButtonEnrollment>
+        <Modal isOpen={isEnrollment}>
+          <FormSteps onClose={toggleIsEnrollment} />
+        </Modal>
+      </FormProvider>
     </ThemeProvider>
   )
 }
