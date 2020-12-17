@@ -11,10 +11,44 @@ const Form = styled.form`
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 2rem;
+  overflow-y: hidden;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  font-weight: 600;
+  padding: 1rem 1rem 0 1rem;
+  label {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  input,
+  textarea,
+  select {
+    display: block;
+    width: 90%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid black;
+    &:focus {
+      outline: 0;
+      border-color: ${(props) => props.theme.body};
+    }
+    margin-top: 0.3rem;
+  }
+  input[type='radio'],
+  input[type='checkbox'] {
+    width: auto;
+    display: inline;
+    padding: 0rem;
+  }
+  input[type='date'] {
+    width: auto;
+    display: block;
+  }
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
 `
 const ModalHeader = styled.div`
   padding: 1rem;
@@ -52,6 +86,10 @@ const FormPagination: React.FC<any> = ({ onClose }) => {
     [dispatch]
   )
 
+  const onSubmitForm = (e: React.FormEvent) => {
+    e.preventDefault()
+  }
+
   return (
     <>
       <ModalHeader>
@@ -59,7 +97,7 @@ const FormPagination: React.FC<any> = ({ onClose }) => {
           <StyledTimesIcon />
         </ButtonClose>
       </ModalHeader>
-      <Form>
+      <Form onSubmit={onSubmitForm}>
         <Demographic isVisible={index === 0} onNext={onNext} />
         <Conditions isVisible={index === 1} onPrev={onPrev} onNext={onNext} />
         <Questionnaire
@@ -68,7 +106,7 @@ const FormPagination: React.FC<any> = ({ onClose }) => {
           onNext={onNext}
         />
         <Summary isVisible={index === 3} onPrev={onPrev} onNext={onNext} />
-        <Submit isVisible={index === 4} onPrev={onPrev} />'
+        <Submit isVisible={index === 4} onPrev={onPrev} />
       </Form>
     </>
   )
