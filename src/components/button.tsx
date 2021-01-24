@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
-  background-color: ${({ theme }) => theme.background};
+  width: 48%;
+  background-color: ${({ theme }) => theme.como};
   display: flex;
-  padding: 0.5rem 2rem;
+  padding: 0.8rem 2rem;
   cursor: pointer;
   user-select: none;
   transition: all 150ms linear;
@@ -12,9 +13,9 @@ const StyledButton = styled.button`
   white-space: nowrap;
   text-decoration: none !important;
   text-transform: none;
-  color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.springwood};
   border: 0 none;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   line-height: 1.3;
   font-size: 1.2rem;
   -webkit-appearance: none;
