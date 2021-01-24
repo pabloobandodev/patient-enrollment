@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
-import { useForm, DEMOGRAPHIC } from '../../context/form-context'
 import { genders, maritalStatus } from '../../lib/constants'
+import useForm from '../../hooks/useForm'
+import useEnrollment from '../../hooks/useEnrollment'
 
-const Container = styled.div`
+const Container = styled.fieldset`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -19,47 +20,45 @@ const ContainerButton = styled.div`
   padding-bottom: 2rem;
   margin-top: 1rem;
 `
-const StyledButton = styled(Button)`
-  background-color: ${(props) => props.color};
-  border-color: ${(props) => props.color};
-  width: 100%;
-`
 
 const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
-  const {
-    state: { demographics },
-    dispatch,
-  } = useForm()
+  const [demographicsValues, setValue] = useForm({
+    firstName: '',
+    lastName: '',
+    gender: '',
+    birth: '',
+    email: '',
+    phone: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    zip: '',
+    maritalStatus: '',
+  })
+  const { addToData } = useEnrollment()
+
+  const onContinue = () => {
+    addToData({ demographicsValues })
+    onNext()
+  }
 
   if (!isVisible) {
     return null
   }
 
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { type, name, value } = e.target
-    const val = type === 'number' ? parseFloat(value) : value
-    dispatch({ type: DEMOGRAPHIC, payload: val, fieldName: name })
-  }
-
-  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target
-    dispatch({ type: DEMOGRAPHIC, payload: value, fieldName: name })
-  }
-
   return (
     <>
       <Container>
-        <h3>Demographic</h3>
         <label htmlFor='firstName'>
           First Name
           <input
             type='text'
             id='firstName'
             name='firstName'
-            placeholder='firstName'
+            placeholder='first name'
             required
-            value={demographics.firstName}
-            onChange={inputHandler}
+            value={demographicsValues.firstName}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='lastName'>
@@ -68,13 +67,13 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             type='text'
             id='lastName'
             name='lastName'
-            placeholder='lastName'
+            placeholder='last name'
             required
-            value={demographics.lastName}
-            onChange={inputHandler}
+            value={demographicsValues.lastName}
+            onChange={setValue}
           />
         </label>
-        <fieldset>
+        <div>
           Gender:
           {genders.map((gender) => (
             <label htmlFor={gender} key={gender}>
@@ -84,13 +83,13 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
                 name='gender'
                 required
                 value={gender}
-                onChange={inputHandler}
-                checked={demographics.gender === gender}
+                onChange={setValue}
+                checked={demographicsValues.gender === gender}
               />
               {gender}
             </label>
           ))}
-        </fieldset>
+        </div>
         <label htmlFor='birth'>
           Birth
           <input
@@ -98,10 +97,10 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             id='birth'
             name='birth'
             required
-            value={demographics.birth}
-            onChange={inputHandler}
             placeholder='DD-MM-YYYY'
             min='2002-01-01'
+            value={demographicsValues.birth}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='email'>
@@ -112,8 +111,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='email'
             placeholder='email'
             required
-            value={demographics.email}
-            onChange={inputHandler}
+            value={demographicsValues.email}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='phone'>
@@ -124,8 +123,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='phone'
             placeholder='phone'
             required
-            value={demographics.phoneNumber}
-            onChange={inputHandler}
+            value={demographicsValues.phone}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='streetAddress'>
@@ -134,10 +133,10 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             type='text'
             id='streetAddress'
             name='streetAddress'
-            placeholder='streetAddress'
+            placeholder='street address'
             required
-            value={demographics.streetAddress}
-            onChange={inputHandler}
+            value={demographicsValues.streetAddress}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='city'>
@@ -148,8 +147,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='city'
             placeholder='city'
             required
-            value={demographics.city}
-            onChange={inputHandler}
+            value={demographicsValues.city}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='state'>
@@ -160,8 +159,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='state'
             placeholder='state'
             required
-            value={demographics.state}
-            onChange={inputHandler}
+            value={demographicsValues.state}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='zip'>
@@ -172,8 +171,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='zip'
             placeholder='zip'
             required
-            value={demographics.zip}
-            onChange={inputHandler}
+            value={demographicsValues.zip}
+            onChange={setValue}
           />
         </label>
         <label htmlFor='maritalStatus'>
@@ -183,8 +182,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='maritalStatus'
             placeholder='maritalStatus'
             required
-            value={demographics.maritalStatus}
-            onChange={selectHandler}
+            value={demographicsValues.maritalStatus}
+            onChange={setValue}
           >
             {maritalStatus.map((status) => (
               <option value={status} key={status}>
@@ -195,9 +194,9 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
         </label>
       </Container>
       <ContainerButton>
-        <StyledButton color={'#29e0ad'} onClick={onNext}>
-          Next
-        </StyledButton>
+        <Button type='button' onClick={onContinue}>
+          Continue
+        </Button>
       </ContainerButton>
     </>
   )
