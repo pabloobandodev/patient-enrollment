@@ -2,9 +2,9 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   body {
-    background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.text};
-    font-family: Arial, Roboto, sans-serif;
+    background: ${({ theme }) => theme.springwood};
+    color: ${({ theme }) => theme.tundora};
     transition: all 0.50s linear;
+    margin: 0;
   }
   `
