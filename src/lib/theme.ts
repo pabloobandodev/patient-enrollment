@@ -1,15 +1,10 @@
-import { theme } from './styled'
+import { Theme } from './styled'
 
-export const lightTheme: theme = {
-  body: '#FFF',
-  text: '#131415',
-  border: '#131415',
-  background: '#363537',
-}
-
-export const darkTheme: theme = {
-  body: '#131415',
-  text: '#fff',
-  border: '#fff',
-  background: '#fff',
+export const theme: Theme = {
+  springwood: '#f8f5f2',
+  tundora: '#474747',
+  grannysmith: '#7d9791',
+  white: '#fff',
+  gray: '#eeeeee',
+  como: '#4F7F71',
 }

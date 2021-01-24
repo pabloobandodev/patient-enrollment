@@ -1,17 +1,21 @@
 import 'styled-components'
 
-type theme = {
-  body: string
-  text: string
-  border: string
-  background: string
+export type Theme = {
+  springwood: string
+  tundora: string
+  grannysmith: string
+  white: string
+  gray: string
+  como: string
 }
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    body: string
-    text: string
-    border: string
-    background: string
+    springwood: string
+    tundora: string
+    grannysmith: string
+    white: string
+    gray: string
+    como: string
   }
 }
