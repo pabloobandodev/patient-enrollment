@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
-import { useForm, CONDITIONS } from '../../context/form-context'
-import { typeConditions } from '../../lib/constants'
+import { conditions, typeConditions } from '../../lib/constants'
 import { Condition } from '../../context/types'
+import useForm from '../../hooks/useForm'
+import useEnrollment from '../../hooks/useEnrollment'
 
-const Container = styled.div`
+const Container = styled.fieldset`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -27,30 +28,37 @@ const ButtonsContainer = styled.div`
   width: 100%;
 `
 const StyledButton = styled(Button)`
-  width: 48%;
   background-color: ${(props) => props.color};
   border-color: ${(props) => props.color};
 `
 
 const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
-  const [condition, setCondition] = useState('none')
-  const {
-    state: { conditions },
-    dispatch,
-  } = useForm()
-
-  if (!isVisible) {
-    return null
-  }
-
-  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target
-    setCondition(value)
-  }
+  const [value, setValue] = useForm({
+    condition: 'all',
+  })
+  const filteredConditions = conditions.filter(
+    (singleCondition: Condition) =>
+      value.condition === 'all' || singleCondition.type === value.condition
+  )
+  const [conditionIds, setConditionIds] = useState<string[]>([])
+  const { addToData } = useEnrollment()
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    dispatch({ type: CONDITIONS, payload: value })
+    if (conditionIds.includes(value)) {
+      setConditionIds(conditionIds.filter((cond) => cond !== value))
+    } else {
+      setConditionIds([...conditionIds, value])
+    }
+  }
+
+  const onContinue = () => {
+    addToData({ conditionIds })
+    onNext()
+  }
+
+  if (!isVisible) {
+    return null
   }
 
   return (
@@ -62,10 +70,10 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
           name='condition'
           placeholder='condition'
           required
-          value={condition}
-          onChange={selectHandler}
+          value={value.condition}
+          onChange={setValue}
         >
-          <option value='none'>none</option>
+          <option value='all'>all</option>
           {typeConditions.map((status) => (
             <option value={status} key={status}>
               {status}
@@ -76,33 +84,32 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
       <Container>
         <fieldset>
           Conditions:
-          {conditions
-            .filter(
-              (cond: Condition) =>
-                condition === 'none' || cond.type === condition
-            )
-            .map((cond) => (
-              <label htmlFor={cond.condition} key={cond.condition}>
-                <input
-                  type='checkbox'
-                  id={cond.condition}
-                  name='condition'
-                  required
-                  value={cond.condition}
-                  onChange={inputHandler}
-                  checked={cond.isPositive}
-                />
-                {cond.condition}
-              </label>
-            ))}
+          {filteredConditions.map((singleCondition) => (
+            <label
+              htmlFor={singleCondition.id}
+              key={singleCondition.id}
+              className='condition'
+            >
+              <input
+                type='checkbox'
+                id={singleCondition.id}
+                name='condition'
+                required
+                value={singleCondition.id}
+                onChange={inputHandler}
+                checked={conditionIds.includes(singleCondition.id)}
+              />
+              {singleCondition.condition}
+            </label>
+          ))}
         </fieldset>
       </Container>
       <ContainerButton>
         <ButtonsContainer>
-          <StyledButton onClick={onPrev}>Back</StyledButton>
-          <StyledButton color={'#29e0ad'} onClick={onNext}>
-            Next
+          <StyledButton onClick={onPrev} color={'#474747'}>
+            Back
           </StyledButton>
+          <StyledButton onClick={onContinue}>Next</StyledButton>
         </ButtonsContainer>
       </ContainerButton>
     </>
