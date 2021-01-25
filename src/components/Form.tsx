@@ -15,8 +15,8 @@ const Form = styled.form`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   label {
-    margin-top: 1.1rem;
-    margin-bottom: 1.1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   input,
   textarea,
@@ -25,7 +25,7 @@ const Form = styled.form`
     background-color: #f9f9f9;
     width: 95%;
     padding: 0.7rem 0.2rem 0.7rem 0.2rem;
-    margin-top: 0.2rem;
+    margin-top: 0.5rem;
     font-size: 1rem;
     border-radius: 4px;
     border: 1px solid #cccccc;
@@ -52,6 +52,22 @@ const Form = styled.form`
   }
   .condition {
     display: block;
+  }
+  .secondary-question {
+    margin-top: 0rem;
+  }
+  small {
+    display: block;
+    font-size: 0.9rem;
+    color: ${({ theme }) => theme.grannysmith};
+    margin-bottom: 1rem;
+  }
+  .add-list {
+    margin-top: 0.1rem;
+    display: flex;
+    width: 96%;
+    align-items: flex-end;
+    margin-bottom: 2rem;
   }
 `
 
