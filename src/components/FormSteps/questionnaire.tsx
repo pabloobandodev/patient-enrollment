@@ -136,7 +136,7 @@ const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
           <StyledButton onClick={onPrev} color={'#474747'}>
             Back
           </StyledButton>
-          <StyledButton onClick={onContinue}>Next</StyledButton>
+          <StyledButton onClick={onContinue}>Continue</StyledButton>
         </ButtonsContainer>
       </ContainerButton>
     </>
