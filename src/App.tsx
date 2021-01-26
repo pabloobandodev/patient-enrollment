@@ -5,6 +5,7 @@ import { theme } from './lib/theme'
 import { EnrollmentProvider } from './context/enrollment'
 import FormSteps from './components/FormSteps'
 import Typography from './components/Typography'
+import { SITE_TITLE } from './lib/constants'
 
 const Header = styled.div`
   width: 100%;
@@ -23,7 +24,7 @@ const App: React.FC = () => (
     <GlobalStyles />
     <Typography />
     <Header>
-      <h3 className='center'>Parsley Health</h3>
+      <h3 className='center'>{SITE_TITLE}</h3>
     </Header>
     <EnrollmentProvider>
       <FormSteps />
