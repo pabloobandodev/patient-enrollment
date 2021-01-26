@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import isEmpty from '../lib/isEmpty'
 
-type InputI = {
+type IInput = {
   type: string
   id: string
   placeholder: string
   value: string
-  onChange: (e: any) => void
+  onChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => void
   isInvalidForm: boolean
   required: boolean
 }
 
-const Input: React.FC<InputI> = ({
+const Input: React.FC<IInput> = ({
   children,
   type,
   id,
