@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
@@ -34,9 +33,10 @@ const StyledButton = styled.button`
   &:focus {
     outline: none;
   }
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.3;
+  }
 `
-const Button: React.FC<any> = (props) => {
-  return <StyledButton {...props} />
-}
 
-export default Button
+export default StyledButton
