@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 
-const EnrollmentContext = React.createContext<{ data: {}; setData: any }>({
+const EnrollmentContext = React.createContext<{
+  data: {}
+  setData: Dispatch<SetStateAction<{}>>
+}>({
   data: {},
   setData: () => {},
 })
