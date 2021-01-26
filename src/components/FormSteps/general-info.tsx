@@ -5,6 +5,7 @@ import { genders, maritalStatus } from '../../lib/constants'
 import useForm from '../../hooks/useForm'
 import useEnrollment from '../../hooks/useEnrollment'
 import Input from '../Input'
+import FormTitle from '../FormTitle'
 
 const Container = styled.fieldset`
   display: flex;
@@ -22,7 +23,12 @@ const ContainerButton = styled.div`
   margin-top: 1rem;
 `
 
-const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
+type IProps = {
+  isVisible: boolean
+  onNext: () => void
+}
+
+const GeneralInfo: React.FC<IProps> = ({ isVisible, onNext }) => {
   const { values, updateValue, onIsInvalidForm, isInvalidForm } = useForm({
     firstName: '',
     lastName: '',
@@ -40,7 +46,7 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
 
   const onContinue = () => {
     if (onIsInvalidForm()) return
-    addToData({ demographic: values })
+    addToData({ generalInfo: values })
     onNext()
   }
 
@@ -51,6 +57,9 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
   return (
     <>
       <Container>
+        <FormTitle number='1' subTitle='Let’s get started'>
+          General Information
+        </FormTitle>
         <Input
           type='text'
           id='firstName'
@@ -194,4 +203,4 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
   )
 }
 
-export default Demographic
+export default GeneralInfo

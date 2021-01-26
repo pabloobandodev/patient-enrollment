@@ -4,6 +4,7 @@ import useEnrollment from '../../hooks/useEnrollment'
 import useForm from '../../hooks/useForm'
 import useList from '../../hooks/useList'
 import Button from '../Button'
+import FormTitle from '../FormTitle'
 import InputQuestion from '../InputQuestion'
 import List from '../List'
 
@@ -33,8 +34,14 @@ const StyledButton = styled(Button)`
   border-color: ${(props) => props.color};
 `
 
-const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
-  const [questionnaireValues, setValue] = useForm({
+type IProps = {
+  isVisible: boolean
+  onNext: () => void
+  onPrev: () => void
+}
+
+const Questionnaire: React.FC<IProps> = ({ isVisible, onNext, onPrev }) => {
+  const { values, updateValue, clearSpecificValue } = useForm({
     tobacco: '',
     alcohol: '',
     drugs: '',
@@ -61,11 +68,11 @@ const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
 
   const onContinue = () => {
     addToData({
-      questionary: {
-        ...questionnaireValues,
-        medications,
-        allergies,
-        surgeries,
+      questionnaire: {
+        ...values,
+        medications: medications.join(', '),
+        allergies: allergies.join(', '),
+        surgeries: surgeries.join(', '),
       },
     })
     onNext()
@@ -78,24 +85,30 @@ const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
   return (
     <>
       <Container>
+        <FormTitle number='3' subTitle='Answer with confidence'>
+          Medical questions
+        </FormTitle>
         <InputQuestion
           id='tobacco'
-          value={questionnaireValues.tobacco}
-          onChange={setValue}
+          value={values.tobacco}
+          onChange={updateValue}
+          onClear={clearSpecificValue}
         >
           Do you smoke any tobacco products?
         </InputQuestion>
         <InputQuestion
           id='alcohol'
-          value={questionnaireValues.alcohol}
-          onChange={setValue}
+          value={values.alcohol}
+          onChange={updateValue}
+          onClear={clearSpecificValue}
         >
           Do you drink alcohol?
         </InputQuestion>
         <InputQuestion
           id='drugs'
-          value={questionnaireValues.drugs}
-          onChange={setValue}
+          value={values.drugs}
+          onChange={updateValue}
+          onClear={clearSpecificValue}
         >
           Have you regularly used illicit drugs?
         </InputQuestion>
@@ -133,10 +146,12 @@ const Questionnaire: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
       </Container>
       <ContainerButton>
         <ButtonsContainer>
-          <StyledButton onClick={onPrev} color={'#474747'}>
+          <StyledButton type='button' onClick={onPrev} color={'#474747'}>
             Back
           </StyledButton>
-          <StyledButton onClick={onContinue}>Continue</StyledButton>
+          <StyledButton type='button' onClick={onContinue}>
+            Continue
+          </StyledButton>
         </ButtonsContainer>
       </ContainerButton>
     </>

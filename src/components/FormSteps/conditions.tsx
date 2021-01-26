@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
 import { conditions, typeConditions } from '../../lib/constants'
-import { Condition } from '../../context/types'
+import { ICondition } from '../../context/types'
 import useForm from '../../hooks/useForm'
 import useEnrollment from '../../hooks/useEnrollment'
+import FormTitle from '../FormTitle'
 
 const Container = styled.fieldset`
   display: flex;
@@ -32,13 +33,19 @@ const StyledButton = styled(Button)`
   border-color: ${(props) => props.color};
 `
 
-const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
-  const [value, setValue] = useForm({
+type IProps = {
+  isVisible: boolean
+  onNext: () => void
+  onPrev: () => void
+}
+
+const Conditions: React.FC<IProps> = ({ isVisible, onNext, onPrev }) => {
+  const { values, updateValue } = useForm({
     condition: 'all',
   })
   const filteredConditions = conditions.filter(
-    (singleCondition: Condition) =>
-      value.condition === 'all' || singleCondition.type === value.condition
+    (singleCondition: ICondition) =>
+      values.condition === 'all' || singleCondition.type === values.condition
   )
   const [conditionIds, setConditionIds] = useState<string[]>([])
   const { addToData } = useEnrollment()
@@ -46,7 +53,9 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     if (conditionIds.includes(value)) {
-      setConditionIds(conditionIds.filter((cond) => cond !== value))
+      setConditionIds(
+        conditionIds.filter((singleCondition) => singleCondition !== value)
+      )
     } else {
       setConditionIds([...conditionIds, value])
     }
@@ -63,6 +72,9 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
 
   return (
     <>
+      <FormTitle number='2' subTitle='List conditions by category'>
+        Conditions
+      </FormTitle>
       <label htmlFor='condition'>
         Filter by
         <select
@@ -70,8 +82,8 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
           name='condition'
           placeholder='condition'
           required
-          value={value.condition}
-          onChange={setValue}
+          value={values.condition}
+          onChange={updateValue}
         >
           <option value='all'>all</option>
           {typeConditions.map((status) => (
@@ -106,10 +118,12 @@ const Conditions: React.FC<any> = ({ isVisible, onNext, onPrev }) => {
       </Container>
       <ContainerButton>
         <ButtonsContainer>
-          <StyledButton onClick={onPrev} color={'#474747'}>
+          <StyledButton type='button' onClick={onPrev} color={'#474747'}>
             Back
           </StyledButton>
-          <StyledButton onClick={onContinue}>Continue</StyledButton>
+          <StyledButton type='button' onClick={onContinue}>
+            Continue
+          </StyledButton>
         </ButtonsContainer>
       </ContainerButton>
     </>
