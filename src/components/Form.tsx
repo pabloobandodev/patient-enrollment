@@ -59,12 +59,6 @@ const Form = styled.form`
   .secondary-question {
     margin-top: 0rem;
   }
-  small {
-    display: block;
-    font-size: 0.9rem;
-    color: ${({ theme }) => theme.grannysmith};
-    margin-bottom: 1rem;
-  }
   .error {
     color: #d0312d;
     margin-bottom: 0;
