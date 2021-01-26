@@ -7,7 +7,7 @@ const Form = styled.form`
   overflow-y: hidden;
   padding: 1rem 1rem 0 1rem;
   max-width: 850px;
-  height: 600px;
+  height: 800px;
   margin: 4rem auto 4rem auto;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.044);
@@ -50,6 +50,9 @@ const Form = styled.form`
     padding: 0;
     margin: 0;
   }
+  .invalid {
+    border-bottom: 3px solid #d0312d;
+  }
   .condition {
     display: block;
   }
@@ -61,6 +64,11 @@ const Form = styled.form`
     font-size: 0.9rem;
     color: ${({ theme }) => theme.grannysmith};
     margin-bottom: 1rem;
+  }
+  .error {
+    color: #d0312d;
+    margin-bottom: 0;
+    margin-top: -0.5rem;
   }
   .add-list {
     margin-top: 0.1rem;

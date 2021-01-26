@@ -4,6 +4,7 @@ import Button from '../Button'
 import { genders, maritalStatus } from '../../lib/constants'
 import useForm from '../../hooks/useForm'
 import useEnrollment from '../../hooks/useEnrollment'
+import Input from '../Input'
 
 const Container = styled.fieldset`
   display: flex;
@@ -22,10 +23,10 @@ const ContainerButton = styled.div`
 `
 
 const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
-  const [demographicsValues, setValue] = useForm({
+  const { values, updateValue, onIsInvalidForm, isInvalidForm } = useForm({
     firstName: '',
     lastName: '',
-    gender: '',
+    gender: 'Other',
     birth: '',
     email: '',
     phone: '',
@@ -33,12 +34,13 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
     city: '',
     state: '',
     zip: '',
-    maritalStatus: '',
+    maritalStatus: 'Other',
   })
   const { addToData } = useEnrollment()
 
   const onContinue = () => {
-    addToData({ demographicsValues })
+    if (onIsInvalidForm()) return
+    addToData({ demographic: values })
     onNext()
   }
 
@@ -49,30 +51,28 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
   return (
     <>
       <Container>
-        <label htmlFor='firstName'>
+        <Input
+          type='text'
+          id='firstName'
+          placeholder='first name'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.firstName}
+          onChange={updateValue}
+        >
           First Name
-          <input
-            type='text'
-            id='firstName'
-            name='firstName'
-            placeholder='first name'
-            required
-            value={demographicsValues.firstName}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='lastName'>
+        </Input>
+        <Input
+          type='text'
+          id='lastName'
+          placeholder='last name'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.lastName}
+          onChange={updateValue}
+        >
           Last Name
-          <input
-            type='text'
-            id='lastName'
-            name='lastName'
-            placeholder='last name'
-            required
-            value={demographicsValues.lastName}
-            onChange={setValue}
-          />
-        </label>
+        </Input>
         <div>
           Gender:
           {genders.map((gender) => (
@@ -83,98 +83,90 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
                 name='gender'
                 required
                 value={gender}
-                onChange={setValue}
-                checked={demographicsValues.gender === gender}
+                onChange={updateValue}
+                checked={values.gender === gender}
               />
               {gender}
             </label>
           ))}
         </div>
-        <label htmlFor='birth'>
+        <Input
+          type='date'
+          id='birth'
+          placeholder='DD-MM-YYYY'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.birth}
+          onChange={updateValue}
+        >
           Birth
-          <input
-            type='date'
-            id='birth'
-            name='birth'
-            required
-            placeholder='DD-MM-YYYY'
-            min='2002-01-01'
-            value={demographicsValues.birth}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='email'>
+        </Input>
+        <Input
+          type='email'
+          id='email'
+          placeholder='email'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.email}
+          onChange={updateValue}
+        >
           Email
-          <input
-            type='email'
-            id='email'
-            name='email'
-            placeholder='email'
-            required
-            value={demographicsValues.email}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='phone'>
+        </Input>
+        <Input
+          type='tel'
+          id='phone'
+          placeholder='phone'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.phone}
+          onChange={updateValue}
+        >
           Phone
-          <input
-            type='tel'
-            id='phone'
-            name='phone'
-            placeholder='phone'
-            required
-            value={demographicsValues.phone}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='streetAddress'>
+        </Input>
+        <Input
+          type='text'
+          id='streetAddress'
+          placeholder='street address'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.streetAddress}
+          onChange={updateValue}
+        >
           Street Address
-          <input
-            type='text'
-            id='streetAddress'
-            name='streetAddress'
-            placeholder='street address'
-            required
-            value={demographicsValues.streetAddress}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='city'>
+        </Input>
+        <Input
+          type='text'
+          id='city'
+          placeholder='city'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.city}
+          onChange={updateValue}
+        >
           City
-          <input
-            type='text'
-            id='city'
-            name='city'
-            placeholder='city'
-            required
-            value={demographicsValues.city}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='state'>
+        </Input>
+        <Input
+          type='text'
+          id='state'
+          placeholder='state'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.state}
+          onChange={updateValue}
+        >
           State
-          <input
-            type='text'
-            id='state'
-            name='state'
-            placeholder='state'
-            required
-            value={demographicsValues.state}
-            onChange={setValue}
-          />
-        </label>
-        <label htmlFor='zip'>
+        </Input>
+        <Input
+          type='text'
+          id='zip'
+          placeholder='zip'
+          required
+          isInvalidForm={isInvalidForm}
+          value={values.zip}
+          onChange={updateValue}
+        >
           Zip
-          <input
-            type='text'
-            id='zip'
-            name='zip'
-            placeholder='zip'
-            required
-            value={demographicsValues.zip}
-            onChange={setValue}
-          />
-        </label>
+        </Input>
         <label htmlFor='maritalStatus'>
           Select
           <select
@@ -182,8 +174,8 @@ const Demographic: React.FC<any> = ({ isVisible, onNext }) => {
             name='maritalStatus'
             placeholder='maritalStatus'
             required
-            value={demographicsValues.maritalStatus}
-            onChange={setValue}
+            value={values.maritalStatus}
+            onChange={updateValue}
           >
             {maritalStatus.map((status) => (
               <option value={status} key={status}>
