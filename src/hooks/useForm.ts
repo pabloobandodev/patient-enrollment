@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
 
-const useForm = (defaults: any) => {
+type IDefaults = {
+  [key: string]: string
+}
+
+const useForm = (defaults: IDefaults) => {
   const [values, setValues] = useState(defaults)
   const [isInvalidForm, setIsInvalid] = useState(false)
 
-  const updateValue = (e: any) => {
-    let { value } = e.target
-    if (e.target.type === 'number') {
-      value = parseInt(value)
-    }
-    setValues({ ...values, [e.target.name]: value })
-  }
+  const updateValue = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => setValues({ ...values, [e.target.name]: e.target.value })
 
   const onIsInvalidForm = () => {
     setIsInvalid(false)
