@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-
-export type IObjectData = {
-  [key: string]: string
-}
-
-type IData = {
-  generalInfo: IObjectData
-  conditionIds: string[]
-  questionnaire: IObjectData
-}
+import { IData } from './types'
 
 const EnrollmentContext = React.createContext<{
   data: IData
@@ -19,7 +10,7 @@ const EnrollmentContext = React.createContext<{
     conditionIds: [],
     questionnaire: {},
   },
-  setData: (data: {}) => {},
+  setData: () => {},
 })
 
 export const EnrollmentProvider: React.FC = ({ children }) => {
