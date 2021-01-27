@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BiEdit } from 'react-icons/bi'
-import { Element, Button } from './List'
+import { Element, ButtonIcon } from './List'
 
 const Container = styled.div`
   padding: 1rem;
@@ -19,25 +19,26 @@ const Label = styled.h4`
   margin-top: 1rem;
 `
 
-const VisualizeData: React.FC<{ id: string; data: any; setIndex: any }> = ({
-  id,
-  children,
-  data,
-  setIndex,
-}) => {
+type IProps = {
+  id: string
+  data: { label: string; value: string }[]
+  setIndex: (i: number) => void
+}
+
+const VisualizeData: React.FC<IProps> = ({ id, children, data, setIndex }) => {
   return (
     <Container>
       <ContainerH>
         <h3>{children}</h3>
-        <Button type='button' onClick={() => setIndex(id)}>
+        <ButtonIcon type='button' onClick={() => setIndex(parseInt(id))}>
           <BiEdit />
-        </Button>
+        </ButtonIcon>
       </ContainerH>
-      {data.map((element: any) => (
+      {data.map((element: { label: string; value: string }) => (
         <React.Fragment key={`${id}-${element.label}`}>
           <Label>{element.label}</Label>
           <Element>
-            {element.value.length !== 0 ? element.value : 'No information'}
+            {element.value === '' ? 'No information' : element.value}
           </Element>
         </React.Fragment>
       ))}
