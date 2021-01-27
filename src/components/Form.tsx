@@ -71,6 +71,10 @@ const Form = styled.form`
     align-items: flex-end;
     margin-bottom: 2rem;
   }
+  @media (max-width: 768px) {
+    max-width: 300px;
+    height: 600px;
+  }
 `
 
 export default Form
