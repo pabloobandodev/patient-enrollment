@@ -8,7 +8,7 @@ const ContainerH = styled.div`
   align-items: center;
   margin: 0;
 `
-const Element = styled.p`
+export const Element = styled.p`
   background-color: #f9f9f9;
   width: 90%;
   padding: 0.7rem 0.2rem 0.7rem 0.2rem;
@@ -22,7 +22,7 @@ const Element = styled.p`
 const P = styled.p`
   margin-bottom: 0.2rem;
 `
-const Button = styled.button`
+export const ButtonIcon = styled.button`
   background: none;
   border: none;
   cursor: pointer;
@@ -30,15 +30,31 @@ const Button = styled.button`
   color: ${(props) => props.color};
   font-size: 1.5rem;
 `
+const Small = styled.small`
+  display: block;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.grannysmith};
+  margin-bottom: 1rem;
+`
 
-const List: React.FC<{
+type IProps = {
   title: string
   id: string
   value: string[]
   onRemove: (i: number) => void
   onCreate: (value: string) => void
   onRemoveAll: () => void
-}> = ({ children, title, id, value, onRemove, onCreate, onRemoveAll }) => {
+}
+
+const List: React.FC<IProps> = ({
+  children,
+  title,
+  id,
+  value,
+  onRemove,
+  onCreate,
+  onRemoveAll,
+}) => {
   const [isChecked, setIsChecked] = useState(false)
   const [text, setText] = useState('')
 
@@ -56,13 +72,17 @@ const List: React.FC<{
     if (!isChecked && value.length === 0) return null
     return (
       <>
-        <small>{children}</small>
+        <Small>{children}</Small>
         {value.map((element, i) => (
           <ContainerH key={`${id}-${i}`}>
             <Element>{element}</Element>
-            <Button type='button' onClick={() => onRemove(i)} color='#d0312d'>
+            <ButtonIcon
+              type='button'
+              onClick={() => onRemove(i)}
+              color='#d0312d'
+            >
               <BiTrash />
-            </Button>
+            </ButtonIcon>
           </ContainerH>
         ))}
         <P>Add {id}</P>
@@ -76,9 +96,9 @@ const List: React.FC<{
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <Button type='button' color='#29e0ad' onClick={addValue}>
+          <ButtonIcon type='button' color='#29e0ad' onClick={addValue}>
             <BiPlusCircle />
-          </Button>
+          </ButtonIcon>
         </label>
       </>
     )
