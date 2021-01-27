@@ -8,9 +8,7 @@ const useList = (): [
 ] => {
   const [list, setList] = useState<string[]>([])
 
-  const addToList = (value: string) => {
-    setList([...list, value])
-  }
+  const addToList = (value: string) => setList([...list, value])
 
   const removeToList = (i: number) =>
     setList([...list.slice(0, i), ...list.slice(i + 1)])
