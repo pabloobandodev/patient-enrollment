@@ -10,6 +10,7 @@ const useEnrollment = () => {
 
   const submitEnrollment = (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('data ', data)
   }
 
   return {
