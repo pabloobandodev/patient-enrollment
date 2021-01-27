@@ -30,7 +30,7 @@ const SwitchButton = styled.span`
   background: ${({ theme }) => theme.gray};
   box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
   ${SwitchInput}:checked + ${SwitchLabel} & {
-    background: #29e0ad;
+    background: ${({ theme }) => theme.grannysmith};
     left: calc(100%);
     transform: translateX(-100%);
   }
