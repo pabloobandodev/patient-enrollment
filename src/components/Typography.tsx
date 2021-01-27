@@ -8,7 +8,7 @@ const Typography = createGlobalStyle`
   }
   html {
     font-family: EuclidCircularB, sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
-    color: var(--black);
+    color: ${({ theme }) => theme.tundora};
   }
   p, li {
     letter-spacing: 0.5px;
