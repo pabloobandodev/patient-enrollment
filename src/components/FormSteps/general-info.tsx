@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Button from '../Button'
 import { genders, maritalStatus } from '../../lib/constants'
 import useForm from '../../hooks/useForm'
-import useEnrollment from '../../hooks/useEnrollment'
+import { useEnrollment, addToData } from '../../context/enrollment-context'
 import Input from '../Input'
 import FormTitle from '../FormTitle'
 
@@ -42,11 +42,11 @@ const GeneralInfo: React.FC<IProps> = ({ isVisible, onNext }) => {
     zip: '',
     maritalStatus: 'Other',
   })
-  const { addToData } = useEnrollment()
+  const { data, setData } = useEnrollment()
 
   const onContinue = () => {
     if (onIsInvalidForm()) return
-    addToData({ generalInfo: values })
+    addToData(setData, data, { generalInfo: values })
     onNext()
   }
 
