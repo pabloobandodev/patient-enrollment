@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import useEnrollment from '../../hooks/useEnrollment'
+import { useEnrollment } from '../../context/enrollment-context'
 import {
   attachDemographicLabels,
   attachConditionLabels,

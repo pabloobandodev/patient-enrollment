@@ -4,7 +4,7 @@ import Button from '../Button'
 import { conditions, typeConditions } from '../../lib/constants'
 import { ICondition } from '../../context/types'
 import useForm from '../../hooks/useForm'
-import useEnrollment from '../../hooks/useEnrollment'
+import { useEnrollment, addToData } from '../../context/enrollment-context'
 import FormTitle from '../FormTitle'
 
 const Container = styled.fieldset`
@@ -48,7 +48,7 @@ const Conditions: React.FC<IProps> = ({ isVisible, onNext, onPrev }) => {
       values.condition === 'all' || singleCondition.type === values.condition
   )
   const [conditionIds, setConditionIds] = useState<string[]>([])
-  const { addToData } = useEnrollment()
+  const { data, setData } = useEnrollment()
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -62,7 +62,7 @@ const Conditions: React.FC<IProps> = ({ isVisible, onNext, onPrev }) => {
   }
 
   const onContinue = () => {
-    addToData({ conditionIds })
+    addToData(setData, data, { conditionIds })
     onNext()
   }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import useEnrollment from '../../hooks/useEnrollment'
+import { useEnrollment, addToData } from '../../context/enrollment-context'
 import useForm from '../../hooks/useForm'
 import useList from '../../hooks/useList'
 import Button from '../Button'
@@ -64,10 +64,10 @@ const Questionnaire: React.FC<IProps> = ({ isVisible, onNext, onPrev }) => {
     removeToSurgeries,
     removeAllSurgeries,
   ] = useList()
-  const { addToData } = useEnrollment()
+  const { data, setData } = useEnrollment()
 
   const onContinue = () => {
-    addToData({
+    addToData(setData, data, {
       questionnaire: {
         ...values,
         medications: medications.join(', '),

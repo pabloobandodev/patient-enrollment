@@ -6,11 +6,16 @@ import Questionnaire from './questionnaire'
 import Summary from './summary'
 import Submit from './submit'
 import usePagination from '../../hooks/usePagination'
-import useEnrollment from '../../hooks/useEnrollment'
+import { useEnrollment } from '../../context/enrollment-context'
 
 const FormPagination: React.FC = () => {
   const { index, onNext, onPrev, setIndex } = usePagination()
-  const { submitEnrollment } = useEnrollment()
+  const { data } = useEnrollment()
+
+  const submitEnrollment = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('data ', data)
+  }
 
   return (
     <Form onSubmit={submitEnrollment}>
